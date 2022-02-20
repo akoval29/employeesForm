@@ -121,7 +121,6 @@ class WhoAmI5 extends Component {
         {/* еще варианты = onChange - onClick - onSubmit - onInput */}
         {/* аргументы можна и не передавать, тогда будет:   <input type="text" onChange={this.commitInputOnChange}/>   */}
       </div>
-
     )
   }
 }
