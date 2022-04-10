@@ -128,9 +128,11 @@ class WhoAmI5 extends Component {
 function App() {
 
   const data = [
-    {name: 'Ivan', salary: 600, increase: false, id: 1},
-    {name: 'Vovan', salary: 700, increase: true, id: 2},
-    {name: 'Tolik', salary: 850, increase: false, id: 3},
+    {name: 'Malcolm Corley', salary: 600, increase: false, id: 1},
+    {name: 'Mary Corley', salary: 700, increase: true, id: 2},
+    {name: 'Uncle Tork', salary: 850, increase: false, id: 3},
+    {name: 'Ben', salary: 500, increase: false, id: 4},
+    {name: 'Reepburger', salary: 50, increase: false, id: 5},
   ];
 
   return (
