@@ -132,7 +132,6 @@ function App() {
     {name: 'Mary Corley', salary: 700, increase: true, id: 2},
     {name: 'Uncle Tork', salary: 850, increase: false, id: 3},
     {name: 'Ben', salary: 500, increase: false, id: 4},
-    {name: 'Reepburger', salary: 50, increase: false, id: 5},
   ];
 
   return (
