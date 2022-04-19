@@ -6,7 +6,10 @@ const EmployeesList = ({data}) => {
         const {id, ...itemProps} = item;
         return (
             // <EmployeesListItem name={item.name} salary={item.salary}/> - хотя Спред помоему более елегантный подход, а именно :
-            <EmployeesListItem key={id} {...itemProps}/>
+            <EmployeesListItem 
+            key={id} 
+            {...itemProps}
+            onDelete={() => console.log("Deleted")}/>
         )
     })
 

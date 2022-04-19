@@ -82,8 +82,9 @@ class WhoAmI5 extends Component {
     }))
   }
 
-  commitInputOnChange = (e, color) => {
-    console.log(color)
+  //событие инпута. передали в сетстейт обьект, изменили стейт.
+  commitInputOnChanges = (e, color) => {
+    console.log(color);
     console.log(e.target);
     console.log(e.target.value);
     this.setState({
@@ -96,7 +97,7 @@ class WhoAmI5 extends Component {
     const {years, pos}= this.state;
     return (
       <div>
-        {/* Первый метод */}
+        {/* Первый метод привязки контекста*/}
         <button onClick={this.nextYear} >{this.state.textPlus}</button>
         <button onClick={this.prefYear} >{this.state.textMinus}</button>
         
@@ -116,7 +117,7 @@ class WhoAmI5 extends Component {
         
         <form>
           <span>Введите должность</span>
-          <input type="text" onChange={(e) => this.commitInputOnChange(e, 'some color')}/> 
+          <input type="text" onChange={(e) => this.commitInputOnChanges(e, 'some color')}/> 
         </form>
         {/* еще варианты = onChange - onClick - onSubmit - onInput */}
         {/* аргументы можна и не передавать, тогда будет:   <input type="text" onChange={this.commitInputOnChange}/>   */}
