@@ -1,10 +1,10 @@
+import { Component } from 'react';
+
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
 import EmployeesList from '../employees-list/employees-list';
 import EmployeesAddForm from '../employees-add-form/employees-add-form';
-
-import { Component } from 'react';
 
 import './app.css';
 
@@ -126,35 +126,61 @@ class WhoAmI5 extends Component {
   }
 }
 
-function App() {
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [
+        {name: 'Malcolm Corley', salary: 600, increase: false, id: 1},
+        {name: 'Mary Corley', salary: 700, increase: true, id: 2},
+        {name: 'Uncle Tork', salary: 850, increase: false, id: 3},
+        {name: 'Ben', salary: 500, increase: false, id: 4},
+      ]
+    }
+  }
 
-  const data = [
-    {name: 'Malcolm Corley', salary: 600, increase: false, id: 1},
-    {name: 'Mary Corley', salary: 700, increase: true, id: 2},
-    {name: 'Uncle Tork', salary: 850, increase: false, id: 3},
-    {name: 'Ben', salary: 500, increase: false, id: 4},
-  ];
+  deleteItem = (id) => {
+    this.setState(({data}) => {
 
-  return (
-    <div className="app">
-      <AppInfo />
+      // неудобний метод =) створюєм новий масив, де буде копія data без елемента, визначеного індексом, топто того що має бути видаленим
+      // const index = data.findIndex(elem => elem.id === id);
+      // const before = data.slice(0, index);
+      // const after = data.slice(index +1);
+      // const newArr = [...before, ...after];
+      // return {
+      //   data: newArr
+      // }
 
-      <div className="search-panel">
-        <SearchPanel/>
-        <AppFilter/>
+      // удобний метод
+      return {
+        data: data.filter(item => item.id !== id)
+      }
+    })
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <AppInfo />
+  
+        <div className="search-panel">
+          <SearchPanel/>
+          <AppFilter/>
+        </div>
+        
+        <EmployeesList 
+          data={this.state.data}
+          onDelete={this.deleteItem}/>
+        
+        <EmployeesAddForm/>
+        
+        <WhoAmI1 name="John" lastname="Smith" link="facebook.com"/>
+        <WhoAmI2 name="Vin" lastname="Diesel" link="facebook.com"/>
+        <WhoAmI3 name={{firstName: "Part of"}} lastname="Object" link="facebook.com"/>
+        <WhoAmI4 name={() => {return "Function here !!!!!"}} lastname="realy!" link="facebook.com"/>
+        <WhoAmI5 name="we use classes!!!" lastname="here!!" link="facebook.com"/>
       </div>
-      
-      <EmployeesList data={data}/>
-      
-      <EmployeesAddForm/>
-      
-      <WhoAmI1 name="John" lastname="Smith" link="facebook.com"/>
-      <WhoAmI2 name="Vin" lastname="Diesel" link="facebook.com"/>
-      <WhoAmI3 name={{firstName: "Part of"}} lastname="Object" link="facebook.com"/>
-      <WhoAmI4 name={() => {return "Function here !!!!!"}} lastname="realy!" link="facebook.com"/>
-      <WhoAmI5 name="we use classes!!!" lastname="here!!" link="facebook.com"/>
-    </div>
-  );
-}
-
+    );
+  }
+};
 export default App;
