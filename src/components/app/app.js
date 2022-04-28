@@ -131,10 +131,10 @@ class App extends Component {
     super(props);
     this.state = {
       data: [
-        {name: 'Malcolm Corley', salary: 600, increase: false, id: 1},
-        {name: 'Mary Corley', salary: 700, increase: true, id: 2},
-        {name: 'Uncle Tork', salary: 850, increase: false, id: 3},
-        {name: 'Ben', salary: 500, increase: false, id: 4},
+        {name: 'Malcolm Corley', salary: 600, increase: false, rise: true, id: 1},
+        {name: 'Mary Corley', salary: 700, increase: true, rise: false, id: 2},
+        {name: 'Uncle Tork', salary: 850, increase: false, rise: false, id: 3},
+        {name: 'Ben', salary: 500, increase: false, rise: false, id: 4},
       ]
     }
     this.maxId = 5;
@@ -159,26 +159,95 @@ class App extends Component {
     })
   }
 
+  //Добавить нового сотрудника
   addItem = (name, salary) => {
     const newItem = {
       name,
       salary,
       increase: false,
+      rise: false,
       id: this.maxId++
     }
     this.setState(({data}) => {
-      const newArr = [...data, newItem];
-      return {
-        data: newArr
+      if (newItem.salary <= 0 || newItem.salary ==="" || newItem.name.length <= 2) {
+      console.log("Неверные данные");
+      } else {
+        return {
+          data: [...data, newItem]
+      }      
       }
     });
   }
 
+  // заставляем работать печеньки и звёздочки (ВАРИАНТ 1: ищем индекс нужного элемента, делаем массив из кусков)
+  // onToggleIncrease = (id) => {
+  //   this.setState(({data}) => {
+  //     const index = data.findIndex(elem => elem.id === id);
+  //     const old = data[index];
+  //     const newItem = {...old, increase: !old.increase};
+  //     const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+  //     return {
+  //       data: newArr
+  //     }
+  //   })
+  // }
+
+  // onToggleRise = (id) => {
+  //   this.setState(({data}) => {
+  //     const index = data.findIndex(elem => elem.id === id);
+  //     const old = data[index];
+  //     const newItem = {...old, rise: !old.rise};
+  //     const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+  //     return {
+  //       data: newArr
+  //     }
+  //   })
+  // }
+
+    // заставляем работать печеньки и звёздочки (ВАРИАНТ 2 - МАПим, тоесть создаем новый масив с условием и в нем ретурнится тогл)
+  // onToggleIncrease = (id) => {
+  //   this.setState(({data}) => ({
+  //     data: data.map(item => {
+  //       if (item.id ===id ) {
+  //         return {...item, increase: !item.increase}
+  //       }
+  //       return item;
+  //     })
+  //   }))
+  // }
+
+  // onToggleRise = (id) => {
+  //   this.setState(({data}) => ({
+  //     data: data.map(item => {
+  //       if (item.id ===id ) {
+  //         return {...item, rise: !item.rise}
+  //       }
+  //       return item;
+  //     })
+  //   }))
+  // }
+
+    //заставляем работать печеньки и звёздочки (ВАРИАНТ 3 - укорачиваем Вариант 2)
+    onToggleProp = (id, prop) => {
+    this.setState(({data}) => ({
+      data: data.map(item => {
+        if (item.id ===id ) {
+          return {...item, [prop]: !item[prop]}
+        }
+        return item;
+      })
+    }))
+  }
   render() {
+    const employees = this.state.data.length;
+    const increased = this.state.data.filter(item => item.increase).length;
     return (
       <div className="app">
-        <AppInfo />
-  
+        <AppInfo 
+          employees = {employees} 
+          increased = {increased}/>
         <div className="search-panel">
           <SearchPanel/>
           <AppFilter/>
@@ -186,9 +255,11 @@ class App extends Component {
         
         <EmployeesList 
           data={this.state.data}
-          onDelete={this.deleteItem}/>
+          onDelete={this.deleteItem}
+          onToggleProp = {this.onToggleProp}/>
         
-        <EmployeesAddForm onAdd={this.addItem}/>
+        <EmployeesAddForm 
+          onAdd={this.addItem}/>
         
         <WhoAmI1 name="John" lastname="Smith" link="facebook.com"/>
         <WhoAmI2 name="Vin" lastname="Diesel" link="facebook.com"/>
