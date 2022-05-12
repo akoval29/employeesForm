@@ -2,19 +2,21 @@ import "./app-filter.css";
 
 const AppFilter = (props) => {
     const buttonsData = [
-        {name : 'all', label: "Все сотрудники"},
-        {name : 'rise', label: "На повышение"},
-        {name : 'zp1000+', label: "З/П больше 1000$"},
+        {name : 'all', label: "Все сотрудники", colored: false},
+        {name : 'rise', label: "На повышение", colored: false},
+        {name : 'zp1000+', label: "З/П больше 1000$", colored: true},
     ];
 
-    const buttons = buttonsData.map(({name, label}) => {
+    const buttons = buttonsData.map(({name, label, colored}) => {
         const active = props.filter===name; //такий вираз поверне нам в active - true або false
-        const clazz = active ? 'btn-light' : `btn btn-outline-light`
+        const clazz = active ? 'btn-light' : `btn btn-outline-light`;
+        const style = colored ? {color: 'red'} : null;
         return (
             <button type="button"
             className={`btn ${clazz}`}
             key={name}
-            onClick={() => props.onFilterSelect(name)}>
+            onClick={() => props.onFilterSelect(name)}
+            style={style}>
             {label}
             </button>
         )
